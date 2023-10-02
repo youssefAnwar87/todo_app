@@ -28,6 +28,9 @@ abstract class AppTheme{
       shape: StadiumBorder(
         side: BorderSide(color: AppColors.white,width: 4),
       )
+    ),
+    dividerTheme: DividerThemeData(
+      thickness: 3,color: AppColors.primary
     )
   );
   static ThemeData darkTheme = ThemeData(
@@ -50,6 +53,9 @@ abstract class AppTheme{
       shape: StadiumBorder(
         side: BorderSide(color: AppColors.accentDark,width: 4),
       )
-    )
+    ),
+      dividerTheme: DividerThemeData(
+          thickness: 3,color: AppColors.primaryDark
+      )
   );
 }
