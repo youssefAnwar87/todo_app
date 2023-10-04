@@ -33,6 +33,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   calendar_timeline: ^1.1.2
   flutter_slidable: ^3.0.0
+  firebase_core: ^2.16.0
+  cloud_firestore: ^4.9.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
