@@ -1,22 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/UI/screens/home/tabs/todo_widget.dart';
 import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/UI/utils/app_theme.dart';
+import 'package:todo_app/UI/utils/dialog_utils.dart';
+import 'package:todo_app/models/app_user.dart';
+import 'package:todo_app/models/todo_dm.dart';
 
 class EditScreen extends StatefulWidget {
   static  const String  routeName ="Edit";
+
 
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
 class _EditScreenState extends State<EditScreen> {
+
   DateTime selectedDate = DateTime.now();
   String title ="";
   String details ="";
 
   @override
   Widget build(BuildContext context) {
+    TodoDm todo = ModalRoute.of(context)!.settings.arguments as TodoDm;
     return Scaffold(
       appBar: AppBar(
         title: Text("ToDo Edit"),
@@ -74,7 +82,7 @@ class _EditScreenState extends State<EditScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: TextFormField(
                         onChanged: (text){
-                          title = text;
+                          details = text;
                         },
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
@@ -118,7 +126,31 @@ class _EditScreenState extends State<EditScreen> {
                           minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 60.0)), // Adjust the height as needed
                           backgroundColor: MaterialStateProperty.all<Color>(Color(0xff5D9CEC)),
                         ),
-                        child: Text("Save changes",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 18) ,),
+                        child: InkWell (
+                          onTap: () async{
+                            todo.title = title;
+                            todo.description = details;
+                            todo.date = selectedDate;
+
+                            // Get a reference to the Firestore document and update it
+                            CollectionReference todosCollection =
+                             AppUser.collection().doc(AppUser.currenuser!.id).collection(TodoDm.collecctionName);
+                            try {
+                              showLoading(context);
+                              await todosCollection.doc(todo.id).set(todo.toJson());
+                              hideLoading(context);
+                              Navigator.pop(context);
+                            } catch (e) {
+                              print("Firestore update error: $e");
+                              // Handle the error as needed
+                            }
+
+                            // await todosCollection.doc(todo.id).set(todo.toJson());
+                            //
+                            // // Navigate back to the previous screen
+                            // Navigator.pop(context);
+                          },
+                            child: Text("Save changes",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 18) ,)),
                       ),
                     ),
                     Spacer(),

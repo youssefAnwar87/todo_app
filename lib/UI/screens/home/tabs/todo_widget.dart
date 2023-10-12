@@ -26,7 +26,8 @@ class _ToDoWidgetState extends State<ToDoWidget> {
     ListProvider provider = Provider.of(context);
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context,EditScreen.routeName );
+        Navigator.pushNamed(context,EditScreen.routeName,    arguments: widget.model, // Pass the TodoDm object to EditScreen
+        );
       },
       child: Container(
         decoration: BoxDecoration(
