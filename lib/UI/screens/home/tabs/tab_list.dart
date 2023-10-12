@@ -1,13 +1,34 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/UI/listprovider/list_provider.dart';
 import 'package:todo_app/UI/screens/home/tabs/todo_widget.dart';
 import 'package:todo_app/UI/utils/app_colors.dart';
+import 'package:todo_app/models/todo_dm.dart';
 
-class ListTab extends StatelessWidget {
-  const ListTab({super.key});
 
+class ListTab extends StatefulWidget {
   @override
+  State<ListTab> createState() => _ListTabState();
+}
+
+class _ListTabState extends State<ListTab> {
+late ListProvider provider;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider.refreshTodoList();
+    });
+  }
+  @override
+
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
+    // if (provider.todos.isEmpty){
+    // }
     return Column(
       children: [
         Container(
@@ -21,10 +42,13 @@ class ListTab extends StatelessWidget {
                 ],
               ),
               CalendarTimeline(
-                initialDate: DateTime.now(),
+                initialDate: provider.selectedDate,
                 firstDate: DateTime.now().subtract(Duration(days: 365)),
                 lastDate: DateTime.now().add(Duration(days: 365)),
-                onDateSelected: (date) => print(date),
+                onDateSelected: (date) {
+                  provider.selectedDate = date;
+                  provider.refreshTodoList();
+                },
                 leftMargin: 20,
                 monthColor: AppColors.white,
                 dayColor: AppColors.primary,
@@ -37,11 +61,14 @@ class ListTab extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-             itemCount: 10,
-              itemBuilder: (context,index) =>ToDoWidget()
+             itemCount: provider.todos.length,
+              itemBuilder: (context,index) =>
+                 ToDoWidget(model: provider.todos[index],index: index,),
           ),
         ),
       ],
     );
   }
+
+
 }
