@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/UI/screens/home/home_screen.dart';
 import 'package:todo_app/UI/screens/register/register.dart';
+import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/UI/utils/dialog_utils.dart';
 import 'package:todo_app/models/app_user.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class Login extends StatefulWidget {
   static String routeName = "login";
@@ -18,9 +21,10 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar:  AppBar(
         elevation: 0,
-        title: Text("Login"),
+        title: Text(AppLocalizations.of(context)!.login),
         toolbarHeight: MediaQuery.of(context).size.height*0.1,
         centerTitle: true,
       ),
@@ -32,7 +36,7 @@ class _LoginState extends State<Login> {
             children: [
               SizedBox(height: MediaQuery.of(context).size.height*0.2,),
               Padding(
-                child: Text("Welcome !",style: TextStyle(
+                child: Text(AppLocalizations.of(context)!.welcome,style: TextStyle(
                   fontSize: 24,
                   color: Colors.black,
                   fontWeight: FontWeight.bold
@@ -43,7 +47,7 @@ class _LoginState extends State<Login> {
                   email = text;
                   },
                 decoration: InputDecoration(
-                  label: Text("Email")
+                  label: Text(AppLocalizations.of(context)!.email)
                 ),
               ),
               SizedBox(height: 4,),
@@ -52,7 +56,7 @@ class _LoginState extends State<Login> {
                   password = text;
                   },
                 decoration: InputDecoration(
-                  label: Text("password")
+                  label: Text(AppLocalizations.of(context)!.password)
                 ),
               ),
               SizedBox(height: 20,),
@@ -63,7 +67,7 @@ class _LoginState extends State<Login> {
                 },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 16),
-                    child: Text("Login"),
+                    child: Text(AppLocalizations.of(context)!.login),
                   ),
                 style: ButtonStyle(
 
@@ -76,7 +80,7 @@ class _LoginState extends State<Login> {
                   Navigator.pushNamed(context, Register.routeName);
                 },
                 child: Text(
-                  "Create account",
+                  AppLocalizations.of(context)!.create_account,
                   style: TextStyle(fontSize: 18,color: Colors.black45),
                   textAlign: TextAlign.center,
                 ),

@@ -5,6 +5,8 @@ import 'package:todo_app/UI/listprovider/list_provider.dart';
 import 'package:todo_app/UI/screens/editScreen/edit_screen.dart';
 import 'package:todo_app/UI/screens/login/login.dart';
 import 'package:todo_app/UI/screens/splash/splash_screen.dart';
+import 'package:todo_app/UI/settingsProvider/settings_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'UI/screens/home/home_screen.dart';
 import 'UI/screens/register/register.dart';
@@ -23,9 +25,12 @@ void main() async {
   } catch (error) {
     print("Firebase initialization error: $error");
   }
-  runApp(ChangeNotifierProvider(create: (_) {
-    return ListProvider();
-  },
+  runApp
+    (MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) =>   ListProvider()),
+      ChangeNotifierProvider(create: (context) =>   SettingProvider()..loadSavedSettings()),
+      ],
   child: MyApp()));
 }
 
@@ -34,10 +39,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SettingProvider provider = Provider.of<SettingProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      locale: Locale(provider.currentLocale),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      themeMode:  provider.currentMode,
+      darkTheme: AppTheme.darkTheme,
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.lightTheme,
       routes: {
         SplashScreen.routeName :(_)=> SplashScreen(),
         HomeScreen.routeName :(_)=> HomeScreen(),

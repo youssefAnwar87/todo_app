@@ -1,0 +1,22 @@
+{
+"language" : "Language",
+"mode" : "Mode",
+"done" : "Done!",
+"edit_task" : "Edit Task",
+"this_is_title" : "This is Title",
+"task_details" : "Task details",
+"select_time" : "Select time",
+"save_changes" : "Save changes",
+"todo_edit" : "ToDo Edit",
+"todo_list" : "ToDo List",
+"welcome" : "Welcome!",
+"email" : "ُEmail",
+"login" : "Login",
+"create_account" : "Create account",
+"password" : "Password",
+"user_name" : "User name"
+
+
+
+
+}

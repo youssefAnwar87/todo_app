@@ -33,8 +33,11 @@ abstract class AppTheme{
       thickness: 3,color: AppColors.primary
     )
   );
+
+
   static ThemeData darkTheme = ThemeData(
     primaryColor: AppColors.primaryDark,
+    canvasColor: AppColors.primaryDark,
     appBarTheme:  AppBarTheme(
       backgroundColor: AppColors.primaryDark,
       elevation: 0,

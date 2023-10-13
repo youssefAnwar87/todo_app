@@ -6,6 +6,7 @@ import 'package:todo_app/UI/screens/home/settings/settings.dart';
 import 'package:todo_app/UI/screens/home/tabs/tab_list.dart';
 import 'package:todo_app/UI/screens/login/login.dart';
 import 'package:todo_app/models/app_user.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
 static  const String  routeName ="home";
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     provider = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("To Do List"),
+        title: Text(AppLocalizations.of(context)!.todo_list),
         actions: [
           InkWell(
       onTap: (){

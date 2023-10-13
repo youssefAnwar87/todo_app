@@ -6,6 +6,8 @@ import 'package:todo_app/UI/screens/editScreen/edit_screen.dart';
 import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/UI/utils/app_theme.dart';
 import 'package:todo_app/models/todo_dm.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ToDoWidget extends StatefulWidget {
   TodoDm model;
@@ -58,14 +60,16 @@ class _ToDoWidgetState extends State<ToDoWidget> {
 
             child: Row(
               children: [
-                VerticalDivider(),
+                VerticalDivider(
+                    color: isDoneVisible ? Theme.of(context).primaryColor : Color(0xff61e657)                ),
                 SizedBox(width: 12,),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.model.title,style: AppTheme.taskTitleTextStyle,),
+                      Text(widget.model.title,style: AppTheme.taskTitleTextStyle
+                          .copyWith(color: isDoneVisible ? Theme.of(context).primaryColor : Color(0xff61e657) ),),
                       Text(widget.model.description,style: AppTheme.taskDiscriptionTextStyle,),
                     ],
                   ),
@@ -85,7 +89,7 @@ class _ToDoWidgetState extends State<ToDoWidget> {
                     child: Icon(Icons.check, color: AppColors.white),
                   )
                       : Text(
-                    "Done!",
+                   AppLocalizations.of(context)!.done ,
                     style: TextStyle(
                       color: Color(0xff61e657),
                       fontSize: 22,

@@ -1,0 +1,18 @@
+{
+"language" : "اللغه",
+"mode" : "النمط",
+"done" : "!تم",
+"edit_task" : "تعديل المهمة",
+"this_is_title" : "عنوان المهمة",
+"task_details" : "تفاصيل المهمة",
+"select_time" : "اختر وقت المهمة",
+"save_changes" : "حغظ التعديلات",
+"todo_edit" : "تعديل الهمة",
+"todo_list" : "قائمة المهمات",
+"welcome" : "!مرحبا",
+"email" : "الايميل",
+"login" : "تسجيل الدخول",
+"create_account" : "انشاء حساب",
+"password" : "الرمز السري",
+"user_name" : "اسم المستخدم"
+}

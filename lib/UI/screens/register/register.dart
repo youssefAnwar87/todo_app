@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/UI/screens/home/home_screen.dart';
 import 'package:todo_app/UI/utils/dialog_utils.dart';
 import 'package:todo_app/models/app_user.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class Register extends StatefulWidget {
   static String routeName = "Register";
@@ -38,7 +40,7 @@ class _RegisterState extends State<Register> {
                   userName = text;
                 },
                 decoration: InputDecoration(
-                    label: Text("User name")
+                    label: Text(AppLocalizations.of(context)!.user_name)
                 ),
               ),
               SizedBox(height: 10,),
@@ -47,7 +49,7 @@ class _RegisterState extends State<Register> {
                   email = text;
                 },
                 decoration: InputDecoration(
-                    label: Text("Email")
+                    label: Text(AppLocalizations.of(context)!.email)
                 ),
               ),
               SizedBox(height: 10,),
@@ -57,7 +59,7 @@ class _RegisterState extends State<Register> {
 
                 },
                 decoration: InputDecoration(
-                    label: Text("password")
+                    label: Text(AppLocalizations.of(context)!.password)
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height*0.16,),
@@ -74,7 +76,7 @@ class _RegisterState extends State<Register> {
 
                 child: Row(
                     children: [
-                      Text("Create account",style: TextStyle(fontSize: 18),),
+                      Text(AppLocalizations.of(context)!.create_account,style: TextStyle(fontSize: 18),),
                       Spacer(),
                       Icon(Icons.arrow_forward),
                     ],

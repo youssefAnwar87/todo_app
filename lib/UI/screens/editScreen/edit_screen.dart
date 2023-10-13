@@ -7,6 +7,7 @@ import 'package:todo_app/UI/utils/app_theme.dart';
 import 'package:todo_app/UI/utils/dialog_utils.dart';
 import 'package:todo_app/models/app_user.dart';
 import 'package:todo_app/models/todo_dm.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditScreen extends StatefulWidget {
   static  const String  routeName ="Edit";
@@ -27,7 +28,7 @@ class _EditScreenState extends State<EditScreen> {
     TodoDm todo = ModalRoute.of(context)!.settings.arguments as TodoDm;
     return Scaffold(
       appBar: AppBar(
-        title: Text("ToDo Edit"),
+        title: Text(AppLocalizations.of(context)!.todo_edit),
 
       ),
       body: Stack(
@@ -60,7 +61,7 @@ class _EditScreenState extends State<EditScreen> {
                   children: [
                     SizedBox(height: 20),
                     Text(
-                      "Edit task",
+                      AppLocalizations.of(context)!.edit_task,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
@@ -74,7 +75,8 @@ class _EditScreenState extends State<EditScreen> {
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.black), // Change the color to the desired color
                           ),
-                          hintText: "This is title",
+                          hintText:AppLocalizations.of(context)!.this_is_title,
+
                         ),
                       ),
                     ),
@@ -89,13 +91,15 @@ class _EditScreenState extends State<EditScreen> {
                             borderSide: BorderSide(color: Colors.black), // Change the color to the desired color
                           ),
 
-                          hintText: "Task details",
+                          hintText: AppLocalizations.of(context)!.task_details,
+
                         ),
                       ),
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Select time",
+                    AppLocalizations.of(context)!.select_time,
+
                       style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18),
                     ),
                     SizedBox(height: 20),
@@ -150,7 +154,7 @@ class _EditScreenState extends State<EditScreen> {
                             // // Navigate back to the previous screen
                             // Navigator.pop(context);
                           },
-                            child: Text("Save changes",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 18) ,)),
+                            child: Text(AppLocalizations.of(context)!.save_changes,style: TextStyle(fontWeight: FontWeight.normal,fontSize: 18) ,)),
                       ),
                     ),
                     Spacer(),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/UI/listprovider/list_provider.dart';
 import 'package:todo_app/UI/screens/home/tabs/todo_widget.dart';
+import 'package:todo_app/UI/settingsProvider/settings_provider.dart';
 import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/models/todo_dm.dart';
 
@@ -27,6 +28,8 @@ late ListProvider provider;
 
   Widget build(BuildContext context) {
     provider = Provider.of(context);
+    SettingProvider settingProvider = Provider.of<SettingProvider>(context);
+
     // if (provider.todos.isEmpty){
     // }
     return Column(
@@ -42,6 +45,7 @@ late ListProvider provider;
                 ],
               ),
               CalendarTimeline(
+                locale: settingProvider.currentLocale,
                 initialDate: provider.selectedDate,
                 firstDate: DateTime.now().subtract(Duration(days: 365)),
                 lastDate: DateTime.now().add(Duration(days: 365)),
