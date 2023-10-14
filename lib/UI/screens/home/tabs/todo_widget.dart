@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/UI/listprovider/list_provider.dart';
 import 'package:todo_app/UI/screens/editScreen/edit_screen.dart';
+import 'package:todo_app/UI/settingsProvider/settings_provider.dart';
 import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/UI/utils/app_theme.dart';
+import 'package:todo_app/models/app_user.dart';
 import 'package:todo_app/models/todo_dm.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,9 +26,14 @@ class _ToDoWidgetState extends State<ToDoWidget> {
   bool isDoneVisible = true;
 
   @override
+  void initState() {
+    super.initState();
+    isDoneVisible = widget.model.isDone; // Set isDoneVisible based on the value from Firebase
+  }
   Widget build(BuildContext context) {
 
     ListProvider provider = Provider.of(context);
+    SettingProvider sprovider = Provider.of(context);
     return InkWell(
       onTap: (){
         Navigator.pushNamed(context,EditScreen.routeName,    arguments: widget.model, // Pass the TodoDm object to EditScreen
@@ -33,7 +41,7 @@ class _ToDoWidgetState extends State<ToDoWidget> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: sprovider.isDark()  ? Color(0xff141922)  : AppColors.white,
           borderRadius: BorderRadius.circular(25),
         ),
         margin: EdgeInsets.symmetric(horizontal:22 ,vertical: 30),
@@ -70,12 +78,18 @@ class _ToDoWidgetState extends State<ToDoWidget> {
                     children: [
                       Text(widget.model.title,style: AppTheme.taskTitleTextStyle
                           .copyWith(color: isDoneVisible ? Theme.of(context).primaryColor : Color(0xff61e657) ),),
-                      Text(widget.model.description,style: AppTheme.taskDiscriptionTextStyle,),
+                      Text(widget.model.description,style: AppTheme.taskDiscriptionTextStyle.copyWith(color: sprovider.isDark() ? Colors.white : Colors.black),),
                     ],
                   ),
                 ),
                 InkWell(
                   onTap: () {
+
+                    CollectionReference todosCollection =
+                    AppUser.collection().doc(AppUser.currenuser!.id).collection(TodoDm.collecctionName);
+                    widget.model.isDone = isDoneVisible;
+                     todosCollection.doc(widget.model.id).set(widget.model.toJson());
+
                     isDoneVisible = !isDoneVisible;
                     setState(() {});
                   },

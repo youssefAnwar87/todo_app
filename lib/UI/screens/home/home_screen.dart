@@ -5,6 +5,9 @@ import 'package:todo_app/UI/listprovider/list_provider.dart';
 import 'package:todo_app/UI/screens/home/settings/settings.dart';
 import 'package:todo_app/UI/screens/home/tabs/tab_list.dart';
 import 'package:todo_app/UI/screens/login/login.dart';
+import 'package:todo_app/UI/settingsProvider/settings_provider.dart';
+import 'package:todo_app/UI/utils/app_colors.dart';
+import 'package:todo_app/UI/utils/app_theme.dart';
 import 'package:todo_app/models/app_user.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,11 +22,15 @@ static  const String  routeName ="home";
 
 class _HomeScreenState extends State<HomeScreen> {
   late ListProvider provider;
+  late SettingProvider sprovider;
   int currentSelectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    provider = Provider.of(context);
+
+        provider = Provider.of(context);
+     sprovider = Provider.of(context);
     return Scaffold(
+       // backgroundColor: sprovider.isDark() ?  AppColors.accentDark :AppColors.accent ,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.todo_list),
         actions: [
@@ -38,30 +45,35 @@ class _HomeScreenState extends State<HomeScreen> {
         toolbarHeight: MediaQuery.of(context).size.height*0.10,
       ),
       body: currentSelectedIndex == 0 ? ListTab() : SettingsTab(),
-      bottomNavigationBar: buildBotoomNav(),
+      bottomNavigationBar: buildBotoomNav(context),
       floatingActionButton:  buildFab(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-Widget  buildBotoomNav() => BottomAppBar(
+Widget  buildBotoomNav(BuildContext context) => BottomAppBar(
   shape: CircularNotchedRectangle(),
   clipBehavior: Clip.hardEdge,
   notchMargin: 8,
-  child:   BottomNavigationBar(
-    onTap: (index){
-      currentSelectedIndex = index;
-      setState(() {
+  child:   Theme(
+    data: Theme.of(context).copyWith(canvasColor: sprovider.isDark() ?  Color(0xff141922) : AppColors.white  ),
 
-      });
-    },
-      currentIndex: currentSelectedIndex,
-      items : [
-    BottomNavigationBarItem(icon: Icon(Icons.menu),label:"" ),
+    child: BottomNavigationBar(
 
-    BottomNavigationBarItem(icon: Icon(Icons.settings),label:"" ),
+        onTap: (index){
+        currentSelectedIndex = index;
+        setState(() {
 
-  ]),
+        });
+      },
+        currentIndex: currentSelectedIndex,
+        items : [
+      BottomNavigationBarItem(icon: Icon(Icons.menu),label:"" ),
+
+      BottomNavigationBarItem(icon: Icon(Icons.settings),label:"" ),
+
+    ]),
+  ),
 );
 
   Widget buildFab() => FloatingActionButton(onPressed: (){

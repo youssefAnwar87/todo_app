@@ -16,8 +16,8 @@ class _SettingsTabState extends State<SettingsTab> {
   Widget build(BuildContext context) {
     SettingProvider provider = Provider.of<SettingProvider>(context);
 
-    String selectedLanguage = "en"; // Initialize with the default language
-    String selectedMode = "dark"; // Initialize with the default mode
+    String selectedLanguage = provider.currentLocale;; // Initialize with the default language
+    String selectedMode = provider.currentMode == ThemeMode.light ? "light" : "dark";
 
     return Container(
       padding: EdgeInsets.all(15),
@@ -32,7 +32,15 @@ class _SettingsTabState extends State<SettingsTab> {
           SizedBox(height: 20),
 
           Container(
-            color: Colors.white,
+            decoration: BoxDecoration(
+              color: provider.isDark() ?  Color(0xff141922) :Colors.white,
+
+              border: Border.all(
+                  width: 2,
+                  color: provider.isDark() ? Color(0xff5b98e6) :Color(0xff5d9beb)
+              ),
+            ),
+
             child: DropdownButton<String>(
               padding: EdgeInsets.all(5),
               isExpanded: true,
@@ -40,18 +48,27 @@ class _SettingsTabState extends State<SettingsTab> {
               items: [
                 DropdownMenuItem<String>(
                   value: "en",
-                  child: Text("English"),
+                  child: Text("English",
+                    style: TextStyle(
+                        color: provider.isDark() ? Color(0xff5b98e6) : Color(0xff5d9beb)
+                    ),),
                 ),
                 DropdownMenuItem<String>(
                   value: "ar",
-                  child: Text("Arabic"),
+                  child: Text("العربيه",
+                      style: TextStyle(
+                          color: provider.isDark() ? Color(0xff5b98e6) : Color(0xff5d9beb)
+                      )
+                  ),
                 ),
               ],
               onChanged: (selectedValue) {
                 setState(() {
                   selectedLanguage = selectedValue!;
                   provider.changeCurrentLocale(selectedLanguage);
-                  print(selectedLanguage);
+                  print(provider.currentLocale);
+
+
                 });
               },
             ),
@@ -64,7 +81,15 @@ class _SettingsTabState extends State<SettingsTab> {
           )),
           SizedBox(height: 20),
           Container(
-            color:  AppColors.white,
+            decoration: BoxDecoration(
+              color: provider.isDark() ?  Color(0xff141922) :Colors.white,
+
+              border: Border.all(
+                  width: 2,
+                  color: provider.isDark() ? Color(0xff5b98e6) :Color(0xff5d9beb)
+              ),
+            ),
+
             child: DropdownButton<String>(
               padding: EdgeInsets.all(5),
               isExpanded: true,
@@ -72,11 +97,18 @@ class _SettingsTabState extends State<SettingsTab> {
               items: [
                 DropdownMenuItem<String>(
                   value: "dark",
-                  child: Text("Dark"),
+                  child: Text(AppLocalizations.of(context)!.dark,
+                    style: TextStyle(
+                        color: provider.isDark() ? Color(0xff5b98e6) :Color(0xff5d9beb)
+                  ),),
                 ),
                 DropdownMenuItem<String>(
                   value: "light",
-                  child: Text("Light"),
+                  child: Text(AppLocalizations.of(context)!.light,
+                      style: TextStyle(
+                          color: provider.isDark() ? Color(0xff5b98e6) :Color(0xff5d9beb)
+                      )
+                  ),
                 ),
               ],
               onChanged: (selectedValue) {

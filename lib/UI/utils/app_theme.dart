@@ -37,8 +37,9 @@ abstract class AppTheme{
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: AppColors.primaryDark,
-    canvasColor: AppColors.primaryDark,
+    // canvasColor: AppColors.primaryDark,
     appBarTheme:  AppBarTheme(
+
       backgroundColor: AppColors.primaryDark,
       elevation: 0,
       titleTextStyle: appBarTextStyle.copyWith(color: AppColors.accentDark),
@@ -51,7 +52,7 @@ abstract class AppTheme{
       selectedItemColor: AppColors.primaryDark,
       unselectedItemColor: AppColors.white,
     ),
-    scaffoldBackgroundColor: AppColors.accentDark,
+      scaffoldBackgroundColor: AppColors.accentDark,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       shape: StadiumBorder(
         side: BorderSide(color: AppColors.accentDark,width: 4),

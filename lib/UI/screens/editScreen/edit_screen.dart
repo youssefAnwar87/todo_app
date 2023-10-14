@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/UI/screens/home/tabs/todo_widget.dart';
+import 'package:todo_app/UI/settingsProvider/settings_provider.dart';
 import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/UI/utils/app_theme.dart';
 import 'package:todo_app/UI/utils/dialog_utils.dart';
@@ -25,6 +27,8 @@ class _EditScreenState extends State<EditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SettingProvider sprovider = Provider.of(context);
+
     TodoDm todo = ModalRoute.of(context)!.settings.arguments as TodoDm;
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +41,7 @@ class _EditScreenState extends State<EditScreen> {
       Column(
       children: [
       Expanded(flex : 1,child: Container(color: AppColors.primary,)),
-      Expanded(flex : 9 ,child:Container(color: AppColors.accent,) )
+      Expanded(flex : 9 ,child:Container(color : sprovider.isDark() ? AppColors.accentDark : AppColors.accent,) )
 
 
       ],
@@ -50,6 +54,7 @@ class _EditScreenState extends State<EditScreen> {
             padding: EdgeInsets.all(20),
             height: MediaQuery.of(context).size.height*0.7,
             child: Card(
+              color: sprovider.isDark() ? Color(0xff141922): AppColors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -63,7 +68,9 @@ class _EditScreenState extends State<EditScreen> {
                     Text(
                       AppLocalizations.of(context)!.edit_task,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(
+                        color: sprovider.isDark() ? AppColors.white: Colors.black ,
+                          fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -73,9 +80,10 @@ class _EditScreenState extends State<EditScreen> {
                         },
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black), // Change the color to the desired color
+                            borderSide: BorderSide(color: sprovider.isDark() ? AppColors.primaryDark : Colors.black), // Change the color to the desired color
                           ),
                           hintText:AppLocalizations.of(context)!.this_is_title,
+                          hintStyle: TextStyle(color: sprovider.isDark() ? Colors.white : Colors.black)
 
                         ),
                       ),
@@ -88,10 +96,11 @@ class _EditScreenState extends State<EditScreen> {
                         },
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black), // Change the color to the desired color
+                            borderSide: BorderSide(color: sprovider.isDark() ? AppColors.primaryDark : Colors.black), // Change the color to the desired color
                           ),
 
                           hintText: AppLocalizations.of(context)!.task_details,
+                            hintStyle: TextStyle(color: sprovider.isDark() ? Colors.white : Colors.black)
 
                         ),
                       ),
@@ -100,7 +109,9 @@ class _EditScreenState extends State<EditScreen> {
                     Text(
                     AppLocalizations.of(context)!.select_time,
 
-                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18),
+                      style: TextStyle(
+                        color: sprovider.isDark() ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.normal, fontSize: 18),
                     ),
                     SizedBox(height: 20),
                     InkWell(

@@ -40,8 +40,8 @@ late ListProvider provider;
             children: [
               Column(
                 children: [
-                  Expanded(flex : 3,child: Container(color: AppColors.primary,)),
-                  Expanded(flex : 7 ,child:Container(color: AppColors.accent,) )
+                  Expanded(flex : 3,child: Container(color: settingProvider.isDark() ? AppColors.primaryDark : AppColors.primary,)),
+                  Expanded(flex : 7 ,child:Container(color: settingProvider.isDark() ? AppColors.accentDark : AppColors.accent,) )
                 ],
               ),
               CalendarTimeline(

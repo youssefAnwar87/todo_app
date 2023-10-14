@@ -14,9 +14,7 @@
 "login" : "Login",
 "create_account" : "Create account",
 "password" : "Password",
-"user_name" : "User name"
-
-
-
-
+"user_name" : "User name",
+"dark" :"Dark",
+"light" : "Light"
 }
