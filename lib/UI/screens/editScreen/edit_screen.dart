@@ -75,6 +75,7 @@ class _EditScreenState extends State<EditScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: TextFormField(
+                        style: TextStyle(color: sprovider.isDark()? Colors.white: Colors.black), // Change input text color
                         onChanged: (text){
                           title = text;
                         },
@@ -91,6 +92,8 @@ class _EditScreenState extends State<EditScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: TextFormField(
+                        style: TextStyle(color: sprovider.isDark()? Colors.white: Colors.black), // Change input text color
+
                         onChanged: (text){
                           details = text;
                         },
@@ -131,7 +134,24 @@ class _EditScreenState extends State<EditScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 28.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          todo.title = title;
+                          todo.description = details;
+                          todo.date = selectedDate;
+
+                          // Get a reference to the Firestore document and update it
+                          CollectionReference todosCollection =
+                          AppUser.collection().doc(AppUser.currenuser!.id).collection(TodoDm.collecctionName);
+                          try {
+                            showLoading(context);
+                            await todosCollection.doc(todo.id).set(todo.toJson());
+                            hideLoading(context);
+                            Navigator.pop(context);
+                          } catch (e) {
+                            print("Firestore update error: $e");
+                            // Handle the error as needed
+                          }
+                        },
                         style: ButtonStyle(
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -141,31 +161,7 @@ class _EditScreenState extends State<EditScreen> {
                           minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 60.0)), // Adjust the height as needed
                           backgroundColor: MaterialStateProperty.all<Color>(Color(0xff5D9CEC)),
                         ),
-                        child: InkWell (
-                          onTap: () async{
-                            todo.title = title;
-                            todo.description = details;
-                            todo.date = selectedDate;
-
-                            // Get a reference to the Firestore document and update it
-                            CollectionReference todosCollection =
-                             AppUser.collection().doc(AppUser.currenuser!.id).collection(TodoDm.collecctionName);
-                            try {
-                              showLoading(context);
-                              await todosCollection.doc(todo.id).set(todo.toJson());
-                              hideLoading(context);
-                              Navigator.pop(context);
-                            } catch (e) {
-                              print("Firestore update error: $e");
-                              // Handle the error as needed
-                            }
-
-                            // await todosCollection.doc(todo.id).set(todo.toJson());
-                            //
-                            // // Navigate back to the previous screen
-                            // Navigator.pop(context);
-                          },
-                            child: Text(AppLocalizations.of(context)!.save_changes,style: TextStyle(fontWeight: FontWeight.normal,fontSize: 18) ,)),
+                        child: Text(AppLocalizations.of(context)!.save_changes,style: TextStyle(fontWeight: FontWeight.normal,fontSize: 18) ,),
                       ),
                     ),
                     Spacer(),

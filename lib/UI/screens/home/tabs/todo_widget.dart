@@ -23,17 +23,14 @@ class ToDoWidget extends StatefulWidget {
 }
 
 class _ToDoWidgetState extends State<ToDoWidget> {
-  bool isDoneVisible = true;
+@override
 
   @override
-  void initState() {
-    super.initState();
-    isDoneVisible = widget.model.isDone; // Set isDoneVisible based on the value from Firebase
-  }
   Widget build(BuildContext context) {
 
     ListProvider provider = Provider.of(context);
     SettingProvider sprovider = Provider.of(context);
+    provider.refreshTodoList();
     return InkWell(
       onTap: (){
         Navigator.pushNamed(context,EditScreen.routeName,    arguments: widget.model, // Pass the TodoDm object to EditScreen
@@ -69,7 +66,7 @@ class _ToDoWidgetState extends State<ToDoWidget> {
             child: Row(
               children: [
                 VerticalDivider(
-                    color: isDoneVisible ? Theme.of(context).primaryColor : Color(0xff61e657)                ),
+                    color: !widget.model.isDone ? Theme.of(context).primaryColor : Color(0xff61e657)                ),
                 SizedBox(width: 12,),
                 Expanded(
                   child: Column(
@@ -77,23 +74,22 @@ class _ToDoWidgetState extends State<ToDoWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(widget.model.title,style: AppTheme.taskTitleTextStyle
-                          .copyWith(color: isDoneVisible ? Theme.of(context).primaryColor : Color(0xff61e657) ),),
+                          .copyWith(color: !widget.model.isDone  ? Theme.of(context).primaryColor : Color(0xff61e657) ),),
                       Text(widget.model.description,style: AppTheme.taskDiscriptionTextStyle.copyWith(color: sprovider.isDark() ? Colors.white : Colors.black),),
                     ],
                   ),
                 ),
                 InkWell(
                   onTap: () {
+                    widget.model.isDone  = !widget.model.isDone ;
 
                     CollectionReference todosCollection =
                     AppUser.collection().doc(AppUser.currenuser!.id).collection(TodoDm.collecctionName);
-                    widget.model.isDone = isDoneVisible;
-                     todosCollection.doc(widget.model.id).set(widget.model.toJson());
+                    todosCollection.doc(widget.model.id).set(widget.model.toJson());
 
-                    isDoneVisible = !isDoneVisible;
-                    setState(() {});
-                  },
-                  child: isDoneVisible
+                    provider.refreshTodoList();
+                     },
+                  child: !widget.model.isDone
                       ? Container(
                     decoration: BoxDecoration(
                       color: AppColors.primary,
