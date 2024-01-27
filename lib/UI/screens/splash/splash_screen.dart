@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/UI/screens/home/home_screen.dart';
+import 'package:todo_app/UI/screens/login/login.dart';
+import 'package:todo_app/UI/screens/register/register.dart';
 import 'package:todo_app/UI/utils/app_assets.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2),(){
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+      Navigator.pushReplacementNamed(context, Login.routeName);
 
     });
   }

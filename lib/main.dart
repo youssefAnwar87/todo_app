@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
         Register.routeName :(_)=> Register(),
         EditScreen.routeName : (_)=> EditScreen(),
       },
-      initialRoute: Login.routeName,
+      initialRoute: SplashScreen.routeName,
     );
   }
 }
