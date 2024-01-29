@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/UI/screens/home/home_screen.dart';
 import 'package:todo_app/UI/screens/register/register.dart';
+import 'package:todo_app/UI/settingsProvider/settings_provider.dart';
 import 'package:todo_app/UI/utils/app_assets.dart';
 import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/UI/utils/dialog_utils.dart';
@@ -26,6 +28,8 @@ class _LoginState extends State<Login> {
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    SettingProvider sprovider = Provider.of(context);
+
     return Scaffold(
       // backgroundColor: AppColors.white,
       // appBar:  AppBar(
@@ -50,7 +54,9 @@ class _LoginState extends State<Login> {
                          .of(context)
                          .size
                          .height * 0.31,),
-                     CustomTextFormField(label: "Email",
+                     CustomTextFormField(
+                       isDark: sprovider.isDark(),
+                       label: "Email",
                        keyboradType: TextInputType.emailAddress,
                        controller: emailController,
                        validator: (text) {
@@ -69,7 +75,9 @@ class _LoginState extends State<Login> {
                          return null;
 
                        },),
-                     CustomTextFormField(label: "Password",
+                     CustomTextFormField(
+                         isDark: sprovider.isDark(),
+                         label: "Password",
                          keyboradType: TextInputType.number,
                          controller: passwordController,
                          isPassword: true,
@@ -113,7 +121,7 @@ class _LoginState extends State<Login> {
                        children: [
                          Text("Dont have an account ? ",
                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                             color: AppColors.white
+                             color:   sprovider.isDark() ? AppColors.white : AppColors.black
                            ),
                          ),
                          TextButton(onPressed: (){
@@ -199,14 +207,12 @@ class _LoginState extends State<Login> {
   void login() async{
     if(formKey.currentState?.validate() == true) {
       try {
-        print("hahahahahahahahahahha");
 
         showLoading(context);
 
         UserCredential credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword
           (email: emailController.text, password: passwordController.text);
-        print("woooooooooooooooooooooooooooooow");
 
 
         AppUser currentUser = await getUserFromFireStore(credential.user!.uid);

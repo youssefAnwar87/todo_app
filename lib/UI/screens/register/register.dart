@@ -3,8 +3,10 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/UI/screens/home/home_screen.dart';
 import 'package:todo_app/UI/screens/login/login.dart';
+import 'package:todo_app/UI/settingsProvider/settings_provider.dart';
 import 'package:todo_app/UI/utils/app_assets.dart';
 import 'package:todo_app/UI/utils/dialog_utils.dart';
 import 'package:todo_app/UI/widgets/Custom_Text_Form_Field.dart';
@@ -29,10 +31,13 @@ class _RegisterState extends State<Register> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmatioPasswordController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    SettingProvider sprovider = Provider.of(context);
+
     return Scaffold(
       // appBar:  AppBar(
       //   elevation: 0,
@@ -57,6 +62,7 @@ class _RegisterState extends State<Register> {
                       .size
                       .height * 0.31,),
                   CustomTextFormField(
+                      isDark: sprovider.isDark(),
                       label: "User name", controller: nameController,
                       validator: (text) {
                         if (text == null || text
@@ -67,7 +73,9 @@ class _RegisterState extends State<Register> {
                           return null;
                         }
                       }),
-                  CustomTextFormField(label: "Email",
+                  CustomTextFormField(
+                    isDark: sprovider.isDark(),
+                    label: "Email",
                       keyboradType: TextInputType.emailAddress,
                       controller: emailController,
                   validator: (text) {
@@ -86,7 +94,9 @@ class _RegisterState extends State<Register> {
                     return null;
 
                   },),
-                  CustomTextFormField(label: "Password",
+                  CustomTextFormField(
+                      isDark: sprovider.isDark(),
+                      label: "Password",
                       keyboradType: TextInputType.number,
                       controller: passwordController,
                       isPassword: true,
@@ -105,7 +115,9 @@ class _RegisterState extends State<Register> {
 
 
                   ),
-                  CustomTextFormField(label: "Confirmation Password",
+                  CustomTextFormField(
+                    isDark: sprovider.isDark(),
+                    label: "Confirmation Password",
                     keyboradType: TextInputType.number,
                     controller: confirmatioPasswordController,
                     isPassword: true,

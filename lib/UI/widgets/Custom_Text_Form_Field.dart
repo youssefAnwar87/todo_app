@@ -8,10 +8,12 @@ class CustomTextFormField extends StatelessWidget {
   TextInputType keyboradType;
   String? Function(String?) validator;
   bool isPassword;
+  bool isDark;
   CustomTextFormField({
     required this.label,this.keyboradType = TextInputType.text,
     required this.controller,required this.validator,
-    this.isPassword = false
+    this.isPassword = false,
+    required this.isDark
   });
 
   @override
@@ -21,7 +23,7 @@ class CustomTextFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: isDark ? Colors.white : Colors.black),
         // controller: controller,
         decoration: InputDecoration(
             label:Text(label,style: TextStyle(color:  provider.isDark() ? Theme.of(context).primaryColorDark : Theme.of(context).primaryColor)),

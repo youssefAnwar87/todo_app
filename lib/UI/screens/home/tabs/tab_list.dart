@@ -9,7 +9,7 @@ import 'package:todo_app/UI/utils/app_colors.dart';
 import 'package:todo_app/models/todo_dm.dart';
 
 
-class ListTab extends StatefulWidget {
+class ListTab extends StatefulWidget{
   @override
   State<ListTab> createState() => _ListTabState();
 }
@@ -35,7 +35,7 @@ late ListProvider provider;
     return Column(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height*0.12,
+          height: MediaQuery.of(context).size.height*0.17,
           child: Stack(
             children: [
               Column(
@@ -45,6 +45,8 @@ late ListProvider provider;
                 ],
               ),
               CalendarTimeline(
+                monthHieght: MediaQuery.of(context).size.height*0.04,
+                dayHieght: MediaQuery.of(context).size.height*0.13,
                 locale: settingProvider.currentLocale,
                 initialDate: provider.selectedDate,
                 firstDate: DateTime.now().subtract(Duration(days: 365)),

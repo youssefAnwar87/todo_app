@@ -80,9 +80,24 @@ class _EditScreenState extends State<EditScreen> {
                           title = text;
                         },
                         decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: sprovider.isDark() ? AppColors.primaryDark : Colors.black), // Change the color to the desired color
-                          ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    width: 3,
+                                    color: Theme.of(context).primaryColor
+                                )
+                            ),
+
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    width: 3,
+                                    color: Theme.of(context).primaryColor
+                                )
+                            ),
+                          // enabledBorder: UnderlineInputBorder(
+                          //   borderSide: BorderSide(color: sprovider.isDark() ? AppColors.primaryDark : Colors.black), // Change the color to the desired color
+                          // ),
                           hintText:AppLocalizations.of(context)!.this_is_title,
                           hintStyle: TextStyle(color: sprovider.isDark() ? Colors.white : Colors.black)
 
@@ -98,9 +113,24 @@ class _EditScreenState extends State<EditScreen> {
                           details = text;
                         },
                         decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: sprovider.isDark() ? AppColors.primaryDark : Colors.black), // Change the color to the desired color
-                          ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    width: 3,
+                                    color: Theme.of(context).primaryColor
+                                )
+                            ),
+
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    width: 3,
+                                    color: Theme.of(context).primaryColor
+                                )
+                            ),
+                          // enabledBorder: UnderlineInputBorder(
+                          //   borderSide: BorderSide(color: sprovider.isDark() ? AppColors.primaryDark : Colors.black), // Change the color to the desired color
+                          // ),
 
                           hintText: AppLocalizations.of(context)!.task_details,
                             hintStyle: TextStyle(color: sprovider.isDark() ? Colors.white : Colors.black)
